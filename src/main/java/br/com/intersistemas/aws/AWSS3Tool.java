@@ -26,6 +26,15 @@ import java.util.*;
  */
 public class AWSS3Tool {
 
+    public static final String STORAGE_STANDARD = "STANDARD";
+    public static final String STORAGE_REDUCED_REDUNDANCY = "REDUCED_REDUNDANCY";
+    public static final String STORAGE_GLACIER = "GLACIER";
+    
+    public static final String ACL_PUBLIC = "public";
+    public static final String ACL_PRIVATE = "private";
+    public static final String ACL_PUBLIC_READ_WRITE = "public_read_write";
+    public static final String ACL_AUTHENTICATED_READ = "authenticated_read";
+
     private String acl;
     private String storageClass;
     private Boolean useEncryption;
@@ -239,16 +248,16 @@ public class AWSS3Tool {
         String aclMap = cls != null ? (String) cls.get("acl") : this.acl;
         aclMap = aclMap != null ? aclMap.toLowerCase() : "";
         switch (aclMap) {
-            case "public":
+            case ACL_PUBLIC:
                 s3Object.setAcl(AccessControlList.REST_CANNED_PUBLIC_READ);
                 break;
-            case "private":
+            case ACL_PRIVATE:
                 s3Object.setAcl(AccessControlList.REST_CANNED_PRIVATE);
                 break;
-            case "public_read_write":
+            case ACL_PUBLIC_READ_WRITE:
                 s3Object.setAcl(AccessControlList.REST_CANNED_PUBLIC_READ_WRITE);
                 break;
-            case "authenticated_read":
+            case ACL_AUTHENTICATED_READ:
                 s3Object.setAcl(AccessControlList.REST_CANNED_AUTHENTICATED_READ);
                 break;
             default:
@@ -258,13 +267,13 @@ public class AWSS3Tool {
         String storageClassMap = cls != null ? (String) cls.get("storageClass") : this.storageClass;
         storageClassMap = storageClassMap != null ? storageClassMap.toUpperCase() : "";
         switch (storageClassMap) {
-            case "REDUCED_REDUNDANCY":
+            case STORAGE_REDUCED_REDUNDANCY:
                 s3Object.setStorageClass(S3Object.STORAGE_CLASS_REDUCED_REDUNDANCY);
                 break;
-            case "STANDARD":
+            case STORAGE_STANDARD:
                 s3Object.setStorageClass(S3Object.STORAGE_CLASS_STANDARD);
                 break;
-            case "GLACIER":
+            case STORAGE_GLACIER:
                 s3Object.setStorageClass(S3Object.STORAGE_CLASS_GLACIER);
                 break;
             default:
